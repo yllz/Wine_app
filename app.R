@@ -34,6 +34,8 @@ ui <- fluidPage(
   )
 )
 
+
+
 dat <- read.csv("wine_filtered.csv", header=TRUE, sep=",")
 dat$price_group = cut(dat$price,c(0,50,500,1000,1500,2000,2300))
 levels(dat$price_group) = c("Very Cheap","Cheap","Inexpensive","Average","Expensive","Very Expensive")
@@ -54,20 +56,22 @@ server <- function(input, output) {
   # create the output plots
   output$Boxplot_Price <- renderPlot({
     ggplot(filtered(), aes(x = country, y = price)) +
-      geom_boxplot()
+      geom_boxplot() +
+      ggtitle("Boxplot of Price for Selected Country")
   })
   
   output$Points <- renderPlot({
     ggplot(filtered(), aes(x = points, y = price, col=price_group)) +
-      geom_point()
+      geom_point() +
+      ggtitle("Scatterplot of Price vs Points")
   })
   
   output$Variety <- renderPlot({
     ggplot(filtered(), aes(log(price))) +
       geom_histogram(binwidth=0.2, fill = input$col) +
-      facet_wrap(~variety)
+      facet_wrap(~variety) +
+      ggtitle("Distribution of log(price) by Variety")
   })
 }
 
 shinyApp(ui = ui, server = server)
-
