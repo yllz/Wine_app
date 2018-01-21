@@ -27,14 +27,12 @@ ui <- fluidPage(
     # Main panel layout with output definitions
     mainPanel(
       tabsetPanel(
-        tabPanel("Boxplot_Price", plotOutput("Boxplot_Price")),
+        tabPanel("Price", plotOutput("Price")),
         tabPanel("Points", plotOutput("Points")),
         tabPanel("Variety", plotOutput("Variety")))
     )
   )
 )
-
-
 
 dat <- read.csv("wine_filtered.csv", header=TRUE, sep=",")
 dat$price_group = cut(dat$price,c(0,50,500,1000,1500,2000,2300))
@@ -54,7 +52,7 @@ server <- function(input, output) {
   })
   
   # create the output plots
-  output$Boxplot_Price <- renderPlot({
+  output$Price <- renderPlot({
     ggplot(filtered(), aes(x = country, y = price)) +
       geom_boxplot() +
       ggtitle("Boxplot of Price for Selected Country")
