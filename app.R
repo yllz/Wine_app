@@ -23,7 +23,10 @@ ui <- fluidPage(
       br(),
       uiOutput("secondSelection"),
       br(),
-      colourInput("col", "Selected colour for histogram", "violetred4")
+      colourInput("col", "Selected colour for histogram", "violetred4"),
+      br(),
+      helpText("Note: The range of price is large from 4 to 2300,",
+               "so I take a log transformation when creating the faceted plots.")
     ),
     
     # Main panel layout with output definitions
